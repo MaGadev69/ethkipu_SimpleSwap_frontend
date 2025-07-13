@@ -1,12 +1,12 @@
 "use client";
 
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";  // Add useEffect here
 import { useAccount, useChainId } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
-import { useScaffoldWriteContract, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
-import { parseEther, formatEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import deployedContracts from "~~/contracts/deployedContracts";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
@@ -98,14 +98,14 @@ const Home: NextPage = () => {
   };
 
   // Update tokenBAmount when amountOut changes (for A to B swap)
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSwappingAForB && amountOut !== undefined) {
       setTokenBAmount(formatEther(amountOut));
     }
   }, [amountOut, isSwappingAForB]);
 
   // Update tokenAAmount when amountOut changes (for B to A swap)
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isSwappingAForB && amountOut !== undefined) {
       setTokenAAmount(formatEther(amountOut));
     }
