@@ -81,12 +81,6 @@ const Home: NextPage = () => {
   const myToken2Address = deployedContracts[chainId].MyToken2.address;
   const simpleSwapAddress = deployedContracts[chainId].SimpleSwap.address;
 
-  console.log("reserveA:", reserveA ? formatEther(reserveA) : "N/A");
-  console.log("reserveB:", reserveB ? formatEther(reserveB) : "N/A");
-  console.log("tokenAAmount:", tokenAAmount);
-  console.log("tokenBAmount:", tokenBAmount);
-  console.log("amountIn for getAmountOut:", isSwappingAForB ? parseEther(tokenAAmount || "0") : parseEther(tokenBAmount || "0"));
-  console.log("Expected Output (amountOut):", amountOut ? formatEther(amountOut) : "N/A");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, tokenType: "A" | "B") => {
     const value = e.target.value;
