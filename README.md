@@ -1,6 +1,6 @@
 # Swapporfavor.ai
 
-A simple decentralized application (dApp) that allows users to swap between two different ERC20 tokens (MyToken and MyToken2).
+A decentralized application (dApp) that allows users to swap between two different ERC20 tokens.
 
 ## ✨ Core Technologies
 
