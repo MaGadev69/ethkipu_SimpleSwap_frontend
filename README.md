@@ -32,20 +32,20 @@ Follow these instructions to set up and run the project on your local machine fo
 
 ### Running the Application
 
-1.  **Start the frontend development server:**
+3.  **Start the frontend development server:**
     In a new terminal, from the root directory, run:
     ```bash
     yarn start
     ```
 
-2.  **Open your browser:**
+4.  **Open your browser:**
     Navigate to [http://localhost:3000](http://localhost:3000) to see the application running.
 
 ---
 
 ## 🌐 Network
 
-This project is configured to be deployed and tested on the **Sepolia Testnet**.
+**Sepolia Testnet**.
 
 -   Ensure your MetaMask (or other wallet) is connected to the Sepolia network to interact with the contracts.
 -   You will need some Sepolia ETH to pay for gas fees. Then you can mint and add liquidity tokens with one click.

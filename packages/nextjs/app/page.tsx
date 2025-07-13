@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";  // Add useEffect here
+import { useState, useEffect } from "react";
 import { useAccount, useChainId } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { formatEther, parseEther } from "viem";
@@ -11,19 +11,12 @@ import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaf
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
   const currentChainId = useChainId() || 11155111;
-
-  // Solución: Cast el chainId al tipo correcto
   const chainId = currentChainId as keyof typeof deployedContracts;
-  
-  // Siempre declarar los hooks primero
   const [tokenAAmount, setTokenAAmount] = useState<string>("");
   const [tokenBAmount, setTokenBAmount] = useState<string>("");
   const [isSwappingAForB, setIsSwappingAForB] = useState<boolean>(true);
-
   const { writeContractAsync: writeMyTokenMint } = useScaffoldWriteContract("MyToken");
   const { writeContractAsync: writeMyToken2Mint } = useScaffoldWriteContract("MyToken2");
-  //const { writeContractAsync: writeMyTokenTransfer } = useScaffoldWriteContract("MyToken");
-  //const { writeContractAsync: writeMyToken2Transfer } = useScaffoldWriteContract("MyToken2");
   const { writeContractAsync: writeMyTokenApprove } = useScaffoldWriteContract("MyToken");
   const { writeContractAsync: writeMyToken2Approve } = useScaffoldWriteContract("MyToken2");
   const { writeContractAsync: writeSimpleSwapAddLiquidity } = useScaffoldWriteContract("SimpleSwap");
@@ -61,10 +54,9 @@ const Home: NextPage = () => {
     contractName: "MyToken2",
     functionName: "balanceOf",
     args: [connectedAddress],
-    watch: true, // To keep the balance updated
+    watch: true,
   });
 
-  // Verificar si el chainId existe en deployedContracts DESPUÉS de los hooks
   if (!deployedContracts[chainId]) {
     console.error(`Chain ID ${currentChainId} not found in deployed contracts`);
     return (
@@ -80,7 +72,6 @@ const Home: NextPage = () => {
   const myTokenAddress = deployedContracts[chainId].MyToken.address;
   const myToken2Address = deployedContracts[chainId].MyToken2.address;
   const simpleSwapAddress = deployedContracts[chainId].SimpleSwap.address;
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, tokenType: "A" | "B") => {
     const value = e.target.value;
@@ -104,8 +95,6 @@ const Home: NextPage = () => {
       setTokenAAmount(formatEther(amountOut));
     }
   }, [amountOut, isSwappingAForB]);
-
- 
 
   const handleAddLiquidity = async () => {
     const amountA = parseEther("100");
@@ -179,7 +168,6 @@ const Home: NextPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
@@ -215,7 +203,7 @@ const Home: NextPage = () => {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-4">Add Liquidity</h3>
-                  <p className="text-gray-400 mb-8">Provide liquidity, its may take up to 5 txs</p>
+                  <p className="text-gray-400 mb-8">Provide liquidity, it may take up to 5 txs</p>
                   <button
                     onClick={handleAddLiquidity}
                     disabled={!connectedAddress}
@@ -332,7 +320,7 @@ const Home: NextPage = () => {
           0%, 100% { transform: scale(1); opacity: 0.2; }
           50% { transform: scale(1.1); opacity: 0.3; }
         }
-        
+
         .animation-delay-2000 {
           animation-delay: 2s;
         }
