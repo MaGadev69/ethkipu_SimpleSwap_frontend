@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import React, { useState} from "react"; // Add this import
+import React, { useState } from "react";
 import { useAccount, useChainId } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
@@ -15,23 +15,7 @@ const Home: NextPage = () => {
   // Solución: Cast el chainId al tipo correcto
   const chainId = currentChainId as keyof typeof deployedContracts;
   
-  // Verificar si el chainId existe en deployedContracts
-  if (!deployedContracts[chainId]) {
-    console.error(`Chain ID ${currentChainId} not found in deployed contracts`);
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center text-white">
-          <h2 className="text-2xl font-bold mb-4">Unsupported Network</h2>
-          <p>Chain ID {currentChainId} is not supported</p>
-        </div>
-      </div>
-    );
-  }
-
-  const myTokenAddress = deployedContracts[chainId].MyToken.address;
-  const myToken2Address = deployedContracts[chainId].MyToken2.address;
-  const simpleSwapAddress = deployedContracts[chainId].SimpleSwap.address;
-
+  // Siempre declarar los hooks primero
   const [tokenAAmount, setTokenAAmount] = useState<string>("");
   const [tokenBAmount, setTokenBAmount] = useState<string>("");
   const [isSwappingAForB, setIsSwappingAForB] = useState<boolean>(true);
@@ -80,6 +64,23 @@ const Home: NextPage = () => {
     watch: true, // To keep the balance updated
   });
 
+  // Verificar si el chainId existe en deployedContracts DESPUÉS de los hooks
+  if (!deployedContracts[chainId]) {
+    console.error(`Chain ID ${currentChainId} not found in deployed contracts`);
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center text-white">
+          <h2 className="text-2xl font-bold mb-4">Unsupported Network</h2>
+          <p>Chain ID {currentChainId} is not supported</p>
+        </div>
+      </div>
+    );
+  }
+
+  const myTokenAddress = deployedContracts[chainId].MyToken.address;
+  const myToken2Address = deployedContracts[chainId].MyToken2.address;
+  const simpleSwapAddress = deployedContracts[chainId].SimpleSwap.address;
+
   console.log("reserveA:", reserveA ? formatEther(reserveA) : "N/A");
   console.log("reserveB:", reserveB ? formatEther(reserveB) : "N/A");
   console.log("tokenAAmount:", tokenAAmount);
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
     }
   }, [amountOut, isSwappingAForB]);
 
-
+ 
 
   const handleAddLiquidity = async () => {
     const amountA = parseEther("100");
@@ -184,14 +185,14 @@ const Home: NextPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      
+      {/* Animated background elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse animation-delay-2000"></div>
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col">
-        
+        {/* Header */}
         <div className="flex items-center justify-end p-6 max-w-7xl mx-auto w-full">
           <div className="flex items-center space-x-4">
             <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl px-4 py-2 border border-slate-700">
@@ -205,13 +206,13 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        
+        {/* Main Content */}
         <div className="flex-1 flex flex-col items-center justify-around p-6">
           <img src="/images/image.jpg" alt="SwapPorFavor Logo" className="w-220 h-40 rounded-xl object-cover shadow-lg" />
           <div className="w-full max-w-6xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               
-              
+              {/* Left side - Add Liquidity */}
               <div className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 hover:border-purple-500/50 transition-all duration-300">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -220,7 +221,7 @@ const Home: NextPage = () => {
                     </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-4">Add Liquidity</h3>
-                  <p className="text-gray-400 mb-8">Provide liquidity may take up to 5 tx.</p>
+                  <p className="text-gray-400 mb-8">Provide liquidity, its may take up to 5 txs</p>
                   <button
                     onClick={handleAddLiquidity}
                     disabled={!connectedAddress}
