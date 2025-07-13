@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import React, { useState, useEffect } from "react"; // Add this import
+import React, { useState} from "react"; // Add this import
 import { useAccount, useChainId } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldWriteContract, useScaffoldReadContract } from "~~/hooks/scaffold-eth";
@@ -22,8 +22,8 @@ const Home: NextPage = () => {
 
   const { writeContractAsync: writeMyTokenMint } = useScaffoldWriteContract("MyToken");
   const { writeContractAsync: writeMyToken2Mint } = useScaffoldWriteContract("MyToken2");
-  const { writeContractAsync: writeMyTokenTransfer } = useScaffoldWriteContract("MyToken");
-  const { writeContractAsync: writeMyToken2Transfer } = useScaffoldWriteContract("MyToken2");
+  {/*const { writeContractAsync: writeMyTokenTransfer } = useScaffoldWriteContract("MyToken");*/}
+  {/*const { writeContractAsync: writeMyToken2Transfer } = useScaffoldWriteContract("MyToken2");*/}
   const { writeContractAsync: writeMyTokenApprove } = useScaffoldWriteContract("MyToken");
   const { writeContractAsync: writeMyToken2Approve } = useScaffoldWriteContract("MyToken2");
   const { writeContractAsync: writeSimpleSwapAddLiquidity } = useScaffoldWriteContract("SimpleSwap");
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
     }
   }, [amountOut, isSwappingAForB]);
 
-  const handleMintTokens = async () => {
+  {/*const handleMintTokens = async () => {
     const amount1 = 2000000000n;
     const amount2 = 100000000000n;
 
@@ -110,7 +110,7 @@ const Home: NextPage = () => {
     } catch (e) {
       console.error("Error during mint and transfer:", e);
     }
-  };
+  };*/}
 
   const handleAddLiquidity = async () => {
     const amountA = parseEther("100");
